@@ -1,0 +1,203 @@
+Plataformas_PlataformaVirtual = 
+"<div style=""width:100%;height:100vh;position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;background:#f4f4f0;pointer-events:auto;animation:bgSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;"" onmousedown=""event.stopPropagation();event.preventDefault();"" onclick=""event.stopPropagation();event.preventDefault();"" oncontextmenu=""event.stopPropagation();event.preventDefault();return false;"">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+
+/* Animación de entrada fluida */
+@keyframes bgSlideIn {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeup { 0%{opacity:0;transform:translateY(30px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes textGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Tarjetas base para los 4 elementos (Versión Verde) */
+.cv-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 26px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s, border-color 0.3s;
+  pointer-events: auto;
+  border-left: 5px solid transparent;
+  box-sizing: border-box;
+}
+.cv-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.1);
+  border-left-color: #109D7D; /* Verde DIAD */
+}
+
+/* Tarjeta de Acceso (Reducida en animación) */
+.cv-card.static {
+  cursor: default;
+  border-left-color: #109D7D;
+}
+.cv-card.static:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+}
+
+.cv-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(16,157,125,0.1);
+  color: #109D7D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cv-icon svg { width: 28px; height: 28px; }
+
+.cv-content {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  flex: 1;
+}
+.cv-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+}
+.cv-desc {
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* Botón simulado para la URL */
+.url-btn {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #109D7D;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s;
+  width: fit-content;
+}
+.url-btn:hover { filter: brightness(1.15); }
+
+/* Botones de Navegación */
+.nav-btn {
+  position: absolute;
+  bottom: 40px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+  z-index: 10;
+  color: #444;
+  pointer-events: auto;
+}
+.nav-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.nav-btn.home:hover { color: #6A1B9A; }
+.nav-btn.prev:hover { color: #D32F2F; }
+.nav-btn.next:hover { color: #1A65A4; } /* Azul para indicar que la próxima será Educación Continua */
+
+</style>
+
+<canvas id=""n1"" style=""position:absolute;inset:0;width:100%;height:100%;pointer-events:none;""></canvas>
+
+<div style=""position:absolute;top:10%;left:0;right:0;padding:0 15%;text-align:center;opacity:0;animation:fadeup 0.8s 0.8s forwards;pointer-events:none;"">
+  <div style=""font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#109D7D;margin-bottom:10px;pointer-events:none;"">Plataforma 2</div>
+  <div style=""font-size:40px;font-weight:800;letter-spacing:-1px;margin-bottom:18px;background:linear-gradient(90deg,#096B54,#109D7D,#26A69A,#109D7D);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:textGradientFlow 8s ease infinite;pointer-events:none;"">Plataforma Virtual</div>
+  <div style=""font-size:14px;font-weight:500;line-height:1.8;color:#444;pointer-events:none;"">La Plataforma Virtual es el ecosistema institucional dedicado a la formación y actualización del profesorado. A través de este espacio, los profesores acceden a diplomados y cursos especializados, como Moodle 5.2, diseñados para fortalecer sus competencias digitales, adoptar nuevas herramientas y transformar sus estrategias pedagógicas en el aula.</div>
+</div>
+
+<div style=""position:absolute;top:38%;left:0;right:0;display:grid;grid-template-columns:repeat(2, 1fr);gap:24px;max-width:880px;margin:0 auto;opacity:0;animation:fadeup 0.8s 1.1s forwards;"">
+
+  <div class=""cv-card static"">
+    <div class=""cv-icon"">
+      <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6""/><polyline points=""15 3 21 3 21 9""/><line x1=""10"" y1=""14"" x2=""21"" y2=""3""/></svg>
+    </div>
+    <div class=""cv-content"">
+      <div class=""cv-title"">Forma de acceder</div>
+      <div class=""cv-desc"">Ingreso directo a las aulas de capacitación para profesores y diplomados institucionales.</div>
+      <div class=""url-btn"" onclick=""event.stopPropagation();"">
+        <svg xmlns=""http://www.w3.org/2000/svg"" width=""14"" height=""14"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2.5"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71""/><path d=""M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71""/></svg>
+        plataformavirtual.escuelaing.edu.co
+      </div>
+    </div>
+  </div>
+
+  <div class=""cv-card"">
+    <div class=""cv-icon"">
+      <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><line x1=""18"" y1=""20"" x2=""18"" y2=""10""/><line x1=""12"" y1=""20"" x2=""12"" y2=""4""/><line x1=""6"" y1=""20"" x2=""6"" y2=""14""/></svg>
+    </div>
+    <div class=""cv-content"">
+      <div class=""cv-title"">Reportería</div>
+      <div class=""cv-desc"">Análisis de participación profesoral, seguimiento de finalización de módulos y adopción de herramientas.</div>
+    </div>
+  </div>
+
+  <div class=""cv-card"">
+    <div class=""cv-icon"">
+      <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M21.21 15.89A10 10 0 1 1 8 2.83""/><path d=""M22 12A10 10 0 0 0 12 2v10z""/></svg>
+    </div>
+    <div class=""cv-content"">
+      <div class=""cv-title"">Información y Cifras</div>
+      <div class=""cv-desc"">Catálogo de nuevos diplomados, actualizaciones de Moodle e informes de impacto en capacitación.</div>
+    </div>
+  </div>
+
+  <div class=""cv-card"">
+    <div class=""cv-icon"">
+      <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><circle cx=""12"" cy=""8"" r=""7""/><polyline points=""8.21 13.89 7 23 12 20 17 23 15.79 13.88""/></svg>
+    </div>
+    <div class=""cv-content"">
+      <div class=""cv-title"">Certificación</div>
+      <div class=""cv-desc"">Emisión de insignias digitales y validación de competencias tecnológicas para el profesorado.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class=""nav-btn home"" style=""left: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z""/><polyline points=""9 22 9 12 15 12 15 22""/></svg>
+</div>
+
+<div class=""nav-btn prev"" style=""right: 110px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m12 19-7-7 7-7""/><path d=""M19 12H5""/></svg>
+</div>
+
+<div class=""nav-btn next"" style=""right: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M5 12h14""/><path d=""m12 5 7 7-7 7""/></svg>
+</div>
+
+<script>
+var nc=document.getElementById('n1'),nx=nc.getContext('2d'),nw,nh,nd=[];
+/* Paleta en tonos verdes para el ecosistema Plataforma Virtual */
+var pcols=['16,157,125','9,107,84','38,166,154'];
+function ni(){nw=nc.width=nc.parentElement.offsetWidth;nh=nc.height=nc.parentElement.offsetHeight;nd=Array.from({length:15},function(){return{x:Math.random()*nw,y:Math.random()*nh,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*2+1,co:pcols[Math.floor(Math.random()*pcols.length)]};});}
+function ndr(){nx.clearRect(0,0,nw,nh);nd.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>nw)n.vx*=-1;if(n.y<0||n.y>nh)n.vy*=-1;});nd.forEach(function(a,i){nd.forEach(function(b,j){if(j<=i)return;var d=Math.hypot(a.x-b.x,a.y-b.y);if(d<180){nx.strokeStyle='rgba('+a.co+','+(0.15*(1-d/180))+')';nx.lineWidth=.6;nx.beginPath();nx.moveTo(a.x,a.y);nx.lineTo(b.x,b.y);nx.stroke();}});});nd.forEach(function(n){nx.beginPath();nx.arc(n.x,n.y,n.r,0,Math.PI*2);nx.fillStyle='rgba('+n.co+',0.5)';nx.fill();});requestAnimationFrame(ndr);}
+ni();ndr();window.addEventListener('resize',ni);
+</script>
+</div>"

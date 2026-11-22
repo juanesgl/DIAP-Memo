@@ -1,0 +1,147 @@
+QueEsLaDIAD = 
+"<div style=""width:100%;height:100vh;position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;background:#f4f4f0;pointer-events:auto;animation:bgSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;"" onmousedown=""event.stopPropagation();event.preventDefault();"" onclick=""event.stopPropagation();event.preventDefault();"" oncontextmenu=""event.stopPropagation();event.preventDefault();return false;"">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+
+/* Animación de entrada fluida desde la izquierda idéntica al sidebar */
+@keyframes bgSlideIn {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeup { 0%{opacity:0;transform:translateY(20px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes overlayIn { 0%{opacity:0} 100%{opacity:1} }
+@keyframes overlayOut { 0%{opacity:1} 100%{opacity:0} }
+@keyframes modalIn { 0%{opacity:0;transform:translate(-50%,-46%) scale(.92)} 100%{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+@keyframes modalOut { 0%{opacity:1;transform:translate(-50%,-50%) scale(1)} 100%{opacity:0;transform:translate(-50%,-46%) scale(.92)} }
+
+/* Animación de movimiento lento para el degradado del texto principal */
+@keyframes textGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.pop-btn{transition:transform .2s;cursor:pointer;}
+.pop-btn:hover{transform:translateY(-3px);}
+.modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,0.55);display:none;z-index:50;pointer-events:auto;}
+.modal-overlay.active{display:block;animation:overlayIn .3s ease forwards;}
+.modal-overlay.closing{display:block;animation:overlayOut .25s ease forwards;}
+.modal-box{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:560px;max-width:80%;max-height:70vh;overflow-y:auto;background:#fff;border-radius:16px;padding:36px 40px;box-sizing:border-box;z-index:51;pointer-events:auto;box-shadow:0 20px 50px rgba(0,0,0,0.25);}
+.modal-overlay.active .modal-box{animation:modalIn .35s cubic-bezier(.34,1.56,.64,1) forwards;}
+.modal-overlay.closing .modal-box{animation:modalOut .25s ease forwards;}
+.modal-close{position:absolute;top:16px;right:20px;font-size:20px;color:#999;cursor:pointer;font-weight:700;transition:transform .2s,color .2s;}
+.modal-close:hover{transform:rotate(90deg);color:#D32F2F;}
+
+/* Botones de Navegación */
+.nav-btn {
+  position: absolute;
+  bottom: 40px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+  z-index: 10;
+  color: #444;
+  pointer-events: auto;
+}
+.nav-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.nav-btn.home:hover { color: #6A1B9A; }
+.nav-btn.prev:hover { color: #D32F2F; }
+.nav-btn.next:hover { color: #109D7D; }
+
+</style>
+
+<canvas id=""n1"" style=""position:absolute;inset:0;width:100%;height:100%;pointer-events:none;""></canvas>
+
+<!-- Intro -->
+<div style=""position:absolute;top:20%;left:0;right:0;padding:0 15%;text-align:center;opacity:0;animation:fadeup 0.8s 0.8s forwards;pointer-events:none;"">
+<div style=""font-size:44px;font-weight:800;letter-spacing:-1px;margin-bottom:22px;background:linear-gradient(90deg,#6A1B9A,#1A65A4,#D32F2F,#109D7D,#6A1B9A);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:textGradientFlow 12s ease infinite;pointer-events:none;"">¿Qué es la DIAD?</div>
+<div style=""font-size:14px;font-weight:500;line-height:1.85;color:#444;margin-bottom:14px;pointer-events:none;"">La Dirección de Innovación para el Aprendizaje Digital (DIAD) es la unidad estratégica de la Vicerrectoría Académica que lidera la transformación educativa digital mediante nuevos enfoques pedagógicos basados en TIC y tecnologías de vanguardia que potencian y diversifican la oferta académica hacia la virtualidad, desarrollando competencias clave para el mercado laboral.</div>
+<div style=""font-size:14px;font-weight:500;line-height:1.85;color:#444;pointer-events:none;"">El valor diferencial es el modelo de ingeniería del aprendizaje, el cual sitúa a la vanguardia al permitir la toma de decisiones en tiempo real, garantizando la pertinencia y excelencia de los programas virtuales y consolidando una cultura de innovación constante.</div>
+</div>
+
+<!-- Botones Propósito / Misión / Visión -->
+<div style=""position:absolute;top:68%;left:0;right:0;display:flex;justify-content:center;gap:22px;opacity:0;animation:fadeup 0.8s 1.3s forwards;pointer-events:none;"">
+
+<div class=""pop-btn"" onclick=""event.stopPropagation();document.getElementById('m-proposito').classList.add('active');"" style=""background:linear-gradient(135deg,#D32F2F,#E53935);color:#fff;width:200px;padding:20px 0;border-radius:10px;text-align:center;font-size:15px;font-weight:700;box-shadow:0 8px 20px rgba(211,47,47,0.25);pointer-events:auto;"">
+Propósito
+</div>
+
+<div class=""pop-btn"" onclick=""event.stopPropagation();document.getElementById('m-mision').classList.add('active');"" style=""background:linear-gradient(135deg,#6A1B9A,#8E24AA);color:#fff;width:200px;padding:20px 0;border-radius:10px;text-align:center;font-size:15px;font-weight:700;box-shadow:0 8px 20px rgba(106,27,154,0.25);pointer-events:auto;"">
+Misión
+</div>
+
+<div class=""pop-btn"" onclick=""event.stopPropagation();document.getElementById('m-vision').classList.add('active');"" style=""background:linear-gradient(135deg,#1A65A4,#2182CC);color:#fff;width:200px;padding:20px 0;border-radius:10px;text-align:center;font-size:15px;font-weight:700;box-shadow:0 8px 20px rgba(26,101,164,0.25);pointer-events:auto;"">
+Visión
+</div>
+
+</div>
+
+<!-- Controles de Navegación -->
+<div class=""nav-btn home"" style=""left: 40px;"" onclick=""event.stopPropagation(); /* Acción ir a Home */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z""/><polyline points=""9 22 9 12 15 12 15 22""/></svg>
+</div>
+
+<div class=""nav-btn prev"" style=""right: 110px;"" onclick=""event.stopPropagation(); /* Acción ir a Anterior */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m12 19-7-7 7-7""/><path d=""M19 12H5""/></svg>
+</div>
+
+<div class=""nav-btn next"" style=""right: 40px;"" onclick=""event.stopPropagation(); /* Acción ir a Siguiente */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M5 12h14""/><path d=""m12 5 7 7-7 7""/></svg>
+</div>
+
+<!-- Modal Propósito -->
+<div id=""m-proposito"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-proposito');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-proposito');"">&times;</div>
+    <div style=""font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#D32F2F;margin-bottom:10px;"">Propósito</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:18px;"">Nuestro Propósito</div>
+    <div style=""font-size:14px;font-weight:500;line-height:1.8;color:#444;"">Impulsar la transformación institucional del aprendizaje, desarrollando capacidades pedagógicas, tecnológicas y organizacionales que permitan diseñar, implementar y consolidar experiencias educativas flexibles, pertinentes, inclusivas y de alta calidad, capaces de responder a los desafíos de la educación superior y a las necesidades cambiantes de la sociedad.</div>
+  </div>
+</div>
+
+<!-- Modal Misión -->
+<div id=""m-mision"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-mision');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-mision');"">&times;</div>
+    <div style=""font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6A1B9A;margin-bottom:10px;"">Misión</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:18px;"">Nuestra Misión</div>
+    <div style=""font-size:14px;font-weight:500;line-height:1.8;color:#444;"">Liderar la innovación para el aprendizaje digital mediante el diseño e implementación de estrategias pedagógicas, el fortalecimiento de las competencias digitales de la comunidad universitaria, el desarrollo de la oferta académica mediada por tecnologías, la gestión de ecosistemas digitales de aprendizaje y la articulación de proyectos de innovación educativa que contribuyan al cumplimiento de la misión institucional y al mejoramiento continuo de la calidad académica.</div>
+  </div>
+</div>
+
+<!-- Modal Visión -->
+<div id=""m-vision"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-vision');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-vision');"">&times;</div>
+    <div style=""font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#1A65A4;margin-bottom:10px;"">Visión</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:18px;"">Nuestra Visión</div>
+    <div style=""font-size:14px;font-weight:500;line-height:1.8;color:#444;"">Para el año 2030, la DIAD será reconocida como un referente institucional y nacional en innovación para el aprendizaje digital, por su capacidad para transformar los modelos educativos, consolidar una oferta académica flexible y de alta calidad, fortalecer una cultura de innovación y aprendizaje permanente, e impulsar la excelencia académica mediante el uso estratégico de las tecnologías digitales y la generación de soluciones educativas con impacto en la formación, la investigación y la proyección social.</div>
+  </div>
+</div>
+
+<script>
+function closeModal(id){
+  var el=document.getElementById(id);
+  el.classList.remove('active');
+  el.classList.add('closing');
+  setTimeout(function(){ el.classList.remove('closing'); }, 250);
+}
+
+var nc=document.getElementById('n1'),nx=nc.getContext('2d'),nw,nh,nd=[];
+var pcols=['106,27,154','26,101,164','211,47,47','16,157,125'];
+function ni(){nw=nc.width=nc.parentElement.offsetWidth;nh=nc.height=nc.parentElement.offsetHeight;nd=Array.from({length:18},function(){return{x:Math.random()*nw,y:Math.random()*nh,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*2+1,co:pcols[Math.floor(Math.random()*pcols.length)]};});}
+function ndr(){nx.clearRect(0,0,nw,nh);nd.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>nw)n.vx*=-1;if(n.y<0||n.y>nh)n.vy*=-1;});nd.forEach(function(a,i){nd.forEach(function(b,j){if(j<=i)return;var d=Math.hypot(a.x-b.x,a.y-b.y);if(d<180){nx.strokeStyle='rgba('+a.co+','+(0.15*(1-d/180))+')';nx.lineWidth=.6;nx.beginPath();nx.moveTo(a.x,a.y);nx.lineTo(b.x,b.y);nx.stroke();}});});nd.forEach(function(n){nx.beginPath();nx.arc(n.x,n.y,n.r,0,Math.PI*2);nx.fillStyle='rgba('+n.co+',0.5)';nx.fill();});requestAnimationFrame(ndr);}
+ni();ndr();window.addEventListener('resize',ni);
+</script>
+</div>"

@@ -1,0 +1,265 @@
+Servicios_DIAD = 
+"<div style=""width:100%;height:100vh;position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;background:#f4f4f0;pointer-events:auto;animation:bgSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;"" onmousedown=""event.stopPropagation();event.preventDefault();"" onclick=""event.stopPropagation();event.preventDefault();"" oncontextmenu=""event.stopPropagation();event.preventDefault();return false;"">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+
+@keyframes bgSlideIn {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeup { 0%{opacity:0;transform:translateY(20px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes overlayIn { 0%{opacity:0} 100%{opacity:1} }
+@keyframes overlayOut { 0%{opacity:1} 100%{opacity:0} }
+@keyframes modalIn { 0%{opacity:0;transform:translate(-50%,-46%) scale(.92)} 100%{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+@keyframes modalOut { 0%{opacity:1;transform:translate(-50%,-50%) scale(1)} 100%{opacity:0;transform:translate(-50%,-46%) scale(.92)} }
+@keyframes textGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.list-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 650px;
+  max-width: 90%;
+  padding: 14px 24px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
+}
+.list-btn:hover {
+  transform: translateY(-3px) scale(1.01);
+}
+.list-btn svg { width: 22px; height: 22px; opacity: 0.9; }
+
+.modal-overlay { position:fixed; inset:0; background:rgba(26,26,46,0.55); display:none; z-index:50; pointer-events:auto; }
+.modal-overlay.active { display:block; animation:overlayIn .3s ease forwards; }
+.modal-overlay.closing { display:block; animation:overlayOut .25s ease forwards; }
+.modal-box { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; max-width:85%; max-height:75vh; overflow-y:auto; background:#fff; border-radius:16px; padding:36px 40px; box-sizing:border-box; z-index:51; pointer-events:auto; box-shadow:0 20px 50px rgba(0,0,0,0.25); }
+.modal-overlay.active .modal-box { animation:modalIn .35s cubic-bezier(.34,1.56,.64,1) forwards; }
+.modal-overlay.closing .modal-box { animation:modalOut .25s ease forwards; }
+.modal-close { position:absolute; top:16px; right:20px; font-size:24px; color:#999; cursor:pointer; font-weight:700; transition:transform .2s,color .2s; line-height:1; }
+.modal-close:hover { transform:rotate(90deg); color:#D32F2F; }
+
+.bullet-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; }
+.bullet-text { font-size:14.5px; font-weight:500; line-height:1.6; color:#444; }
+
+/* Botones de Navegación */
+.nav-btn {
+  position: absolute;
+  bottom: 40px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+  z-index: 10;
+  color: #444;
+  pointer-events: auto;
+}
+.nav-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.nav-btn.home:hover { color: #6A1B9A; }
+.nav-btn.prev:hover { color: #D32F2F; }
+.nav-btn.next:hover { color: #109D7D; }
+</style>
+
+<canvas id=""n1"" style=""position:absolute;inset:0;width:100%;height:100%;pointer-events:none;""></canvas>
+
+<!-- Título -->
+<div style=""position:absolute;top:8%;left:0;right:0;text-align:center;opacity:0;animation:fadeup 0.8s 0.8s forwards;pointer-events:none;"">
+  <div style=""font-size:38px;font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,#6A1B9A,#1A65A4,#109D7D,#D32F2F,#6A1B9A);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:textGradientFlow 12s ease infinite;pointer-events:none;"">Nuestros Servicios DIAD</div>
+</div>
+
+<!-- Listado de Botones en Secuencia Cromática -->
+<div style=""position:absolute;top:22%;left:0;right:0;bottom:5%;display:flex;flex-direction:column;align-items:center;gap:14px;overflow-y:auto;padding-bottom:20px;opacity:0;animation:fadeup 0.8s 1.2s forwards;"">
+
+  <!-- 1. Transformación (Morado) -->
+  <div class=""list-btn"" onclick=""event.stopPropagation();document.getElementById('m-s1').classList.add('active');"" style=""background:linear-gradient(135deg,#6A1B9A,#8E24AA);box-shadow:0 6px 16px rgba(106,27,154,0.25);"">
+    <span>1. Transformación e Innovación Educativa</span>
+    <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z""/><path d=""m12 15-3-3a22 22 0 0 1 3.82-13 1.3 1.3 0 0 1 1.49 0 22 22 0 0 1 3.82 13 1.3 1.3 0 0 1-2.14 1.14A22 22 0 0 1 12 15Z""/><path d=""m9 11 4 4""/><circle cx=""17"" cy=""7"" r=""2""/></svg>
+  </div>
+
+  <!-- 2. Oferta Académica (Azul) -->
+  <div class=""list-btn"" onclick=""event.stopPropagation();document.getElementById('m-s2').classList.add('active');"" style=""background:linear-gradient(135deg,#1A65A4,#2182CC);box-shadow:0 6px 16px rgba(26,101,164,0.25);"">
+    <span>2. Diseño y Desarrollo de Oferta Académica virtual</span>
+    <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M22 10v6M2 10l10-5 10 5-10 5z""/><path d=""M6 12v5c3 3 9 3 12 0v-5""/></svg>
+  </div>
+
+  <!-- 3. Competencias (Verde) -->
+  <div class=""list-btn"" onclick=""event.stopPropagation();document.getElementById('m-s3').classList.add('active');"" style=""background:linear-gradient(135deg,#109D7D,#15CDA3);box-shadow:0 6px 16px rgba(16,157,125,0.25);"">
+    <span>3. Desarrollo de Competencias Digitales</span>
+    <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2""/><circle cx=""9"" cy=""7"" r=""4""/><polyline points=""16 11 18 13 22 9""/></svg>
+  </div>
+
+  <!-- 4. Recursos (Rojo) -->
+  <div class=""list-btn"" onclick=""event.stopPropagation();document.getElementById('m-s4').classList.add('active');"" style=""background:linear-gradient(135deg,#D32F2F,#E53935);box-shadow:0 6px 16px rgba(211,47,47,0.25);"">
+    <span>4. Producción y Gestión de Recursos Digitales</span>
+    <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect width=""20"" height=""14"" x=""2"" y=""3"" rx=""2""/><path d=""M10 8l6 4-6 4V8z""/><line x1=""8"" x2=""16"" y1=""21"" y2=""21""/><line x1=""12"" x2=""12"" y1=""17"" y2=""21""/></svg>
+  </div>
+
+  <!-- 5. Tecnología (Morado) -->
+  <div class=""list-btn"" onclick=""event.stopPropagation();document.getElementById('m-s5').classList.add('active');"" style=""background:linear-gradient(135deg,#6A1B9A,#8E24AA);box-shadow:0 6px 16px rgba(106,27,154,0.25);"">
+    <span>5. Tecnología Educativa y Soporte Tecnopedagógico</span>
+    <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M3 18v-6a9 9 0 0 1 18 0v6""/><path d=""M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z""/></svg>
+  </div>
+
+  <!-- 6. Relacionamiento (Azul) -->
+  <div class=""list-btn"" onclick=""event.stopPropagation();document.getElementById('m-s6').classList.add('active');"" style=""background:linear-gradient(135deg,#1A65A4,#2182CC);box-shadow:0 6px 16px rgba(26,101,164,0.25);"">
+    <span>6. Relacionamiento, Extensión e Innovación digital</span>
+    <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2""/><circle cx=""9"" cy=""7"" r=""4""/><path d=""M23 21v-2a4 4 0 0 0-3-3.87""/><path d=""M16 3.13a4 4 0 0 1 0 7.75""/></svg>
+  </div>
+
+  <!-- 7. Observatorio (Verde) -->
+  <div class=""list-btn"" onclick=""event.stopPropagation();document.getElementById('m-s7').classList.add('active');"" style=""background:linear-gradient(135deg,#109D7D,#15CDA3);box-shadow:0 6px 16px rgba(16,157,125,0.25);"">
+    <span>7. Observatorio y tendencias tecnológicas</span>
+    <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><circle cx=""11"" cy=""11"" r=""8""/><path d=""m21 21-4.3-4.3""/><path d=""M8 11h6""/><path d=""M11 8v6""/></svg>
+  </div>
+
+</div>
+
+<!-- Controles de Navegación -->
+<div class=""nav-btn home"" style=""left: 40px;"" onclick=""event.stopPropagation(); /* Acción ir a Home */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z""/><polyline points=""9 22 9 12 15 12 15 22""/></svg>
+</div>
+
+<div class=""nav-btn prev"" style=""right: 110px;"" onclick=""event.stopPropagation(); /* Acción ir a Anterior */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m12 19-7-7 7-7""/><path d=""M19 12H5""/></svg>
+</div>
+
+<div class=""nav-btn next"" style=""right: 40px;"" onclick=""event.stopPropagation(); /* Acción ir a Siguiente */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M5 12h14""/><path d=""m12 5 7 7-7 7""/></svg>
+</div>
+
+<!-- Modales -->
+
+<!-- Modal 1 -->
+<div id=""m-s1"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-s1');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-s1');"">&times;</div>
+    <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6A1B9A;margin-bottom:8px;"">Servicio 1</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:24px;line-height:1.2;"">Transformación e Innovación Educativa</div>
+    <div style=""display:flex;flex-direction:column;"">
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#6A1B9A;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Modelos de enseñanza y aprendizaje (híbrido, virtual, metodologías activas)</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#6A1B9A;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Ingeniería del aprendizaje (analítica, diseño instruccional)</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#6A1B9A;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Cultura digital e innovación pedagógica</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#6A1B9A;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Marcos de trabajo institucionales</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2 -->
+<div id=""m-s2"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-s2');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-s2');"">&times;</div>
+    <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#1A65A4;margin-bottom:8px;"">Servicio 2</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:24px;line-height:1.2;"">Diseño y Desarrollo de Oferta Académica virtual</div>
+    <div style=""display:flex;flex-direction:column;"">
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#1A65A4;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Estructuración oferta virtual, híbrida, continua</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#1A65A4;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Ampliación de la oferta académica (diversificación)</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#1A65A4;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Gestión y transformación de programas existentes</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#1A65A4;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Estandarización de aulas virtuales</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3 -->
+<div id=""m-s3"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-s3');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-s3');"">&times;</div>
+    <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#109D7D;margin-bottom:8px;"">Servicio 3</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:24px;line-height:1.2;"">Desarrollo de Competencias Digitales</div>
+    <div style=""display:flex;flex-direction:column;"">
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#109D7D;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Desarrollo profesoral (actualización, acompañamiento)</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#109D7D;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Fortalecimiento de competencias digitales (rutas)</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#109D7D;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Acompañamiento tecnopedagógico</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4 -->
+<div id=""m-s4"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-s4');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-s4');"">&times;</div>
+    <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#D32F2F;margin-bottom:8px;"">Servicio 4</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:24px;line-height:1.2;"">Producción y Gestión de Recursos Digitales</div>
+    <div style=""display:flex;flex-direction:column;"">
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#D32F2F;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Transformación y creación de contenidos multimedia</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#D32F2F;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Aprovechamiento de recursos institucionales</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#D32F2F;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Innovación (IA, simuladores, recursos emergentes)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 5 -->
+<div id=""m-s5"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-s5');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-s5');"">&times;</div>
+    <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6A1B9A;margin-bottom:8px;"">Servicio 5</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:24px;line-height:1.2;"">Tecnología Educativa y Soporte Tecnopedagógico</div>
+    <div style=""display:flex;flex-direction:column;"">
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#6A1B9A;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Soporte técnico y tecnopedagógico a la comunidad</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#6A1B9A;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Administración de plataformas educativas y ecosistemas</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#6A1B9A;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Gestión de laboratorios remotos y virtuales</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 6 -->
+<div id=""m-s6"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-s6');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-s6');"">&times;</div>
+    <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#1A65A4;margin-bottom:8px;"">Servicio 6</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:24px;line-height:1.2;"">Relacionamiento, Extensión e Innovación en entorno digital</div>
+    <div style=""display:flex;flex-direction:column;"">
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#1A65A4;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Espacios académicos, eventos y comunidades de práctica</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#1A65A4;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Alianzas estratégicas con redes</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#1A65A4;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Vinculación académica-sector externo</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 7 -->
+<div id=""m-s7"" class=""modal-overlay"" onclick=""event.stopPropagation();closeModal('m-s7');"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""event.stopPropagation();closeModal('m-s7');"">&times;</div>
+    <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#109D7D;margin-bottom:8px;"">Servicio 7</div>
+    <div style=""font-size:24px;font-weight:800;color:#1a1a2e;margin-bottom:24px;line-height:1.2;"">Observatorio y tendencias tecnológicas</div>
+    <div style=""display:flex;flex-direction:column;"">
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#109D7D;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Observatorio de innovación y tendencias</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#109D7D;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Posicionamiento institucional DIAD</div></div>
+      <div class=""bullet-item""><div style=""width:6px;height:6px;border-radius:50%;background:#109D7D;margin-top:8px;flex-shrink:0;""></div><div class=""bullet-text"">Transferencia de conocimiento ingenieril</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function closeModal(id){
+  var el = document.getElementById(id);
+  if(el) {
+    el.classList.remove('active');
+    el.classList.add('closing');
+    setTimeout(function(){ el.classList.remove('closing'); }, 250);
+  }
+}
+
+var nc=document.getElementById('n1'),nx=nc.getContext('2d'),nw,nh,nd=[];
+var pcols=['106,27,154','26,101,164','211,47,47','16,157,125'];
+function ni(){nw=nc.width=nc.parentElement.offsetWidth;nh=nc.height=nc.parentElement.offsetHeight;nd=Array.from({length:18},function(){return{x:Math.random()*nw,y:Math.random()*nh,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*2+1,co:pcols[Math.floor(Math.random()*pcols.length)]};});}
+function ndr(){nx.clearRect(0,0,nw,nh);nd.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>nw)n.vx*=-1;if(n.y<0||n.y>nh)n.vy*=-1;});nd.forEach(function(a,i){nd.forEach(function(b,j){if(j<=i)return;var d=Math.hypot(a.x-b.x,a.y-b.y);if(d<180){nx.strokeStyle='rgba('+a.co+','+(0.15*(1-d/180))+')';nx.lineWidth=.6;nx.beginPath();nx.moveTo(a.x,a.y);nx.lineTo(b.x,b.y);nx.stroke();}});});nd.forEach(function(n){nx.beginPath();nx.arc(n.x,n.y,n.r,0,Math.PI*2);nx.fillStyle='rgba('+n.co+',0.5)';nx.fill();});requestAnimationFrame(ndr);}
+ni();ndr();window.addEventListener('resize',ni);
+</script>
+</div>"

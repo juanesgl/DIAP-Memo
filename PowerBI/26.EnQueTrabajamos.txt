@@ -1,0 +1,230 @@
+Ecosistema_DIAD = 
+"<div style=""width:100%;height:100vh;position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;background:#f4f4f0;pointer-events:auto;animation:bgSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;"" onmousedown=""event.stopPropagation();event.preventDefault();"" onclick=""event.stopPropagation();event.preventDefault();"" oncontextmenu=""event.stopPropagation();event.preventDefault();return false;"">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+
+@keyframes bgSlideIn {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeup { 0%{opacity:0;transform:translateY(30px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes textGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Tarjetas del Ecosistema */
+.eco-grid {
+  position: absolute;
+  top: 22%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  opacity: 0;
+  animation: fadeup 0.8s 1s forwards;
+}
+
+.eco-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.eco-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.1);
+}
+.eco-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 6px;
+}
+.eco-card.green::before { background: #109D7D; }
+.eco-card.blue::before { background: #1A65A4; }
+.eco-card.red::before { background: #D32F2F; }
+.eco-card.purple::before { background: #6A1B9A; }
+
+.eco-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.eco-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.green .eco-icon { background: rgba(16,157,125,0.1); color: #109D7D; }
+.blue .eco-icon { background: rgba(26,101,164,0.1); color: #1A65A4; }
+.red .eco-icon { background: rgba(211,47,47,0.1); color: #D32F2F; }
+.purple .eco-icon { background: rgba(106,27,154,0.1); color: #6A1B9A; }
+.eco-icon svg { width: 24px; height: 24px; }
+
+.eco-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+
+.eco-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.eco-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+.eco-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.green .eco-dot { background: #109D7D; }
+.blue .eco-dot { background: #1A65A4; }
+.red .eco-dot { background: #D32F2F; }
+.purple .eco-dot { background: #6A1B9A; }
+
+/* Botones de Navegación */
+.nav-btn {
+  position: absolute;
+  bottom: 40px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+  z-index: 10;
+  color: #444;
+  pointer-events: auto;
+}
+.nav-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.nav-btn.home:hover { color: #6A1B9A; }
+.nav-btn.prev:hover { color: #D32F2F; }
+.nav-btn.next:hover { color: #109D7D; }
+</style>
+
+<canvas id=""n1"" style=""position:absolute;inset:0;width:100%;height:100%;pointer-events:none;""></canvas>
+
+<!-- Título -->
+<div style=""position:absolute;top:6%;left:0;right:0;text-align:center;opacity:0;animation:fadeup 0.8s 0.8s forwards;pointer-events:none;"">
+  <div style=""font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#1A65A4;margin-bottom:8px;"">Alianzas y Apoyo</div>
+  <div style=""font-size:38px;font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,#6A1B9A,#1A65A4,#109D7D,#D32F2F,#6A1B9A);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:textGradientFlow 12s ease infinite;"">Ecosistema de Apoyo DIAD</div>
+  <div style=""font-size:14px;font-weight:500;color:#666;margin-top:8px;"">Las dependencias que articulan e impulsan nuestra misión institucional</div>
+</div>
+
+<!-- Cuadrícula del Ecosistema alineada con las 4 Dimensiones -->
+<div class=""eco-grid"">
+
+  <!-- 1. Organizacional (Verde) -->
+  <div class=""eco-card green"">
+    <div class=""eco-header"">
+      <div class=""eco-icon"">
+        <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect x=""4"" y=""2"" width=""16"" height=""20"" rx=""2"" ry=""2""/><path d=""M9 22v-4h6v4""/><path d=""M8 6h.01""/><path d=""M16 6h.01""/><path d=""M12 6h.01""/><path d=""M12 10h.01""/><path d=""M12 14h.01""/><path d=""M16 10h.01""/><path d=""M16 14h.01""/><path d=""M8 10h.01""/><path d=""M8 14h.01""/></svg>
+      </div>
+      <div class=""eco-title"">Organizacional</div>
+    </div>
+    <div class=""eco-list"">
+      <div class=""eco-item""><div class=""eco-dot""></div><div>Rectoría</div></div>
+      <div class=""eco-item""><div class=""eco-dot""></div><div>Vicerrectoría Académica</div></div>
+      <div class=""eco-item""><div class=""eco-dot""></div><div>Vicerrectoría Administrativa</div></div>
+      <div class=""eco-item""><div class=""eco-dot""></div><div>Secretaría General</div></div>
+    </div>
+  </div>
+
+  <!-- 2. Pedagógica (Azul) -->
+  <div class=""eco-card blue"">
+    <div class=""eco-header"">
+      <div class=""eco-icon"">
+        <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z""/><path d=""M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z""/></svg>
+      </div>
+      <div class=""eco-title"">Pedagógica</div>
+    </div>
+    <div class=""eco-list"">
+      <div class=""eco-item""><div class=""eco-dot""></div><div>Centros de Estudio</div></div>
+    </div>
+  </div>
+
+  <!-- 3. Tecnológica (Roja) -->
+  <div class=""eco-card red"">
+    <div class=""eco-header"">
+      <div class=""eco-icon"">
+        <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect x=""4"" y=""4"" width=""16"" height=""16"" rx=""2"" ry=""2""/><rect x=""9"" y=""9"" width=""6"" height=""6""/><line x1=""9"" y1=""1"" x2=""9"" y2=""4""/><line x1=""15"" y1=""1"" x2=""15"" y2=""4""/><line x1=""9"" y1=""20"" x2=""9"" y2=""23""/><line x1=""15"" y1=""20"" x2=""15"" y2=""23""/><line x1=""20"" y1=""9"" x2=""23"" y2=""9""/><line x1=""20"" y1=""14"" x2=""23"" y2=""14""/><line x1=""1"" y1=""9"" x2=""4"" y2=""9""/><line x1=""1"" y1=""14"" x2=""4"" y2=""14""/></svg>
+      </div>
+      <div class=""eco-title"">Tecnológica</div>
+    </div>
+    <div class=""eco-list"">
+      <div class=""eco-item""><div class=""eco-dot""></div><div>Dirección de Tecnología</div></div>
+    </div>
+  </div>
+
+  <!-- 4. Comunicación (Morada) -->
+  <div class=""eco-card purple"">
+    <div class=""eco-header"">
+      <div class=""eco-icon"">
+        <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 11 18-5v12L3 14v-3z""/><path d=""M11.6 16.8a3 3 0 1 1-5.8-1.6""/></svg>
+      </div>
+      <div class=""eco-title"">Comunicación</div>
+    </div>
+    <div class=""eco-list"">
+      <div class=""eco-item""><div class=""eco-dot""></div><div>Dirección de Mercadeo y Comunicaciones</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Controles de Navegación -->
+<div class=""nav-btn home"" style=""left: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z""/><polyline points=""9 22 9 12 15 12 15 22""/></svg>
+</div>
+
+<div class=""nav-btn prev"" style=""right: 110px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m12 19-7-7 7-7""/><path d=""M19 12H5""/></svg>
+</div>
+
+<div class=""nav-btn next"" style=""right: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M5 12h14""/><path d=""m12 5 7 7-7 7""/></svg>
+</div>
+
+<script>
+// Partículas combinando toda la paleta de la DIAD
+var nc=document.getElementById('n1'),nx=nc.getContext('2d'),nw,nh,nd=[];
+var pcols=['106,27,154','26,101,164','211,47,47','16,157,125'];
+function ni(){nw=nc.width=nc.parentElement.offsetWidth;nh=nc.height=nc.parentElement.offsetHeight;nd=Array.from({length:15},function(){return{x:Math.random()*nw,y:Math.random()*nh,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*2+1,co:pcols[Math.floor(Math.random()*pcols.length)]};});}
+function ndr(){nx.clearRect(0,0,nw,nh);nd.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>nw)n.vx*=-1;if(n.y<0||n.y>nh)n.vy*=-1;});nd.forEach(function(a,i){nd.forEach(function(b,j){if(j<=i)return;var d=Math.hypot(a.x-b.x,a.y-b.y);if(d<180){nx.strokeStyle='rgba('+a.co+','+(0.15*(1-d/180))+')';nx.lineWidth=.6;nx.beginPath();nx.moveTo(a.x,a.y);nx.lineTo(b.x,b.y);nx.stroke();}});});nd.forEach(function(n){nx.beginPath();nx.arc(n.x,n.y,n.r,0,Math.PI*2);nx.fillStyle='rgba('+n.co+',0.5)';nx.fill();});requestAnimationFrame(ndr);}
+ni();ndr();window.addEventListener('resize',ni);
+</script>
+</div>"

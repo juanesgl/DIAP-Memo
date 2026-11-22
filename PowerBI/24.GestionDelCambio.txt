@@ -1,0 +1,304 @@
+Gestion_Cambio = 
+"<div style=""width:100%;height:100vh;position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;background:#f4f4f0;pointer-events:auto;animation:bgSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;"" onmousedown=""event.stopPropagation();event.preventDefault();"" onclick=""event.stopPropagation();event.preventDefault();"" oncontextmenu=""event.stopPropagation();event.preventDefault();return false;"">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+
+@keyframes bgSlideIn { 0% { transform: translateX(-100%); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+@keyframes fadeup { 0%{opacity:0;transform:translateY(30px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes textGradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+/* NODOS INTERACTIVOS (Orbes) */
+.nodes-container {
+  position: absolute;
+  top: 46%; /* <-- Aquí bajamos los nodos (antes estaba en 35%) */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  opacity: 0;
+  animation: fadeup 0.8s 0.8s forwards;
+  pointer-events: none;
+}
+
+.node-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.node-btn:hover {
+  transform: translateY(-12px) scale(1.05);
+}
+
+.node-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  position: relative;
+  z-index: 2;
+  transition: box-shadow 0.3s;
+}
+.node-btn:hover .node-circle {
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+/* Anillo animado al hacer hover */
+.node-circle::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px dashed;
+  opacity: 0;
+  transition: all 0.4s;
+  pointer-events: none;
+}
+.node-btn:hover .node-circle::before {
+  inset: -12px;
+  opacity: 1;
+  animation: spin 6s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.node-title {
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1a1a2e;
+  transition: color 0.3s;
+}
+
+/* Colores de los Nodos */
+.c-green .node-circle { color: #109D7D; }
+.c-green .node-circle::before { border-color: #109D7D; }
+.c-green:hover .node-title { color: #109D7D; }
+
+.c-blue .node-circle { color: #1A65A4; }
+.c-blue .node-circle::before { border-color: #1A65A4; }
+.c-blue:hover .node-title { color: #1A65A4; }
+
+.c-red .node-circle { color: #D32F2F; }
+.c-red .node-circle::before { border-color: #D32F2F; }
+.c-red:hover .node-title { color: #D32F2F; }
+
+.c-purple .node-circle { color: #6A1B9A; }
+.c-purple .node-circle::before { border-color: #6A1B9A; }
+.c-purple:hover .node-title { color: #6A1B9A; }
+
+.node-icon { width: 44px; height: 44px; }
+
+/* MODALES */
+.modal-overlay { position:fixed; inset:0; background:rgba(26,26,46,0.6); display:none; z-index:50; pointer-events:auto; align-items:center; justify-content:center; }
+.modal-overlay.active { display:flex; animation:overlayIn .3s ease forwards; }
+.modal-overlay.closing { display:flex; animation:overlayOut .25s ease forwards; }
+.modal-box { width:580px; max-width:90%; max-height:80vh; background:#fff; border-radius:16px; padding:40px; box-sizing:border-box; position:relative; box-shadow:0 25px 60px rgba(0,0,0,0.25); display:flex; flex-direction:column; }
+.modal-overlay.active .modal-box { animation:modalIn .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+.modal-overlay.closing .modal-box { animation:modalOut .25s ease forwards; }
+.modal-close { position:absolute; top:20px; right:24px; font-size:28px; color:#aaa; cursor:pointer; font-weight:700; transition:transform .2s,color .2s; line-height:1; }
+.modal-close:hover { transform:rotate(90deg); color:#D32F2F; }
+
+.modal-header { display:flex; align-items:center; gap:16px; margin-bottom:24px; padding-bottom:16px; border-bottom:2px solid #eee; flex-shrink:0; }
+.modal-icon-wrap { width:50px; height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.modal-title { font-size:22px; font-weight:800; color:#1a1a2e; line-height:1.2; }
+.modal-body { overflow-y:auto; padding-right:12px; display:flex; flex-direction:column; gap:14px; }
+
+/* Scrollbar modal */
+.modal-body::-webkit-scrollbar { width: 5px; }
+.modal-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 5px; }
+
+/* Lista Numerada */
+.num-item { display:flex; gap:12px; align-items:flex-start; }
+.num-badge { font-size:14px; font-weight:800; line-height:1.4; flex-shrink:0; width:18px; }
+.num-text { font-size:14px; font-weight:500; line-height:1.5; color:#444; }
+
+/* Colores modales */
+.mod-green .modal-icon-wrap { background:rgba(16,157,125,0.1); color:#109D7D; }
+.mod-green .num-badge { color:#109D7D; }
+
+.mod-blue .modal-icon-wrap { background:rgba(26,101,164,0.1); color:#1A65A4; }
+.mod-blue .num-badge { color:#1A65A4; }
+
+.mod-red .modal-icon-wrap { background:rgba(211,47,47,0.1); color:#D32F2F; }
+.mod-red .num-badge { color:#D32F2F; }
+
+.mod-purple .modal-icon-wrap { background:rgba(106,27,154,0.1); color:#6A1B9A; }
+.mod-purple .num-badge { color:#6A1B9A; }
+
+@keyframes overlayIn { 0%{opacity:0} 100%{opacity:1} }
+@keyframes overlayOut { 0%{opacity:1} 100%{opacity:0} }
+@keyframes modalIn { 0%{opacity:0;transform:scale(.92) translateY(20px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
+@keyframes modalOut { 0%{opacity:1;transform:scale(1) translateY(0)} 100%{opacity:0;transform:scale(.92) translateY(20px)} }
+
+/* Botones de Navegación */
+.nav-btn {
+  position: absolute; bottom: 30px; width: 56px; height: 56px; border-radius: 50%; background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, color 0.2s; z-index: 10; color: #444; pointer-events: auto;
+}
+.nav-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.nav-btn.home:hover { color: #6A1B9A; }
+.nav-btn.prev:hover { color: #D32F2F; }
+.nav-btn.next:hover { color: #109D7D; }
+</style>
+
+<canvas id=""n1"" style=""position:absolute;inset:0;width:100%;height:100%;pointer-events:none;""></canvas>
+
+<div style=""position:absolute;top:10%;left:0;right:0;text-align:center;opacity:0;animation:fadeup 0.8s 0.4s forwards;pointer-events:none;"">
+  <div style=""font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#1A65A4;margin-bottom:10px;"">Estrategia y Transformación</div>
+  <div style=""font-size:42px;font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,#6A1B9A,#1A65A4,#109D7D,#D32F2F,#6A1B9A);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:textGradientFlow 12s ease infinite;"">Gestión del Cambio</div>
+  <div style=""font-size:15px;font-weight:500;color:#666;margin-top:12px;"">Haga clic en cada dimensión para ver el plan de acción detallado</div>
+</div>
+
+<div class=""nodes-container"">
+
+  <div class=""node-btn c-green"" onclick=""event.stopPropagation(); window.abrirModal_GC('mod-1')"">
+    <div class=""node-circle"">
+      <svg class=""node-icon"" xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2""/><circle cx=""9"" cy=""7"" r=""4""/><path d=""M22 21v-2a4 4 0 0 0-3-3.87""/><path d=""M16 3.13a4 4 0 0 1 0 7.75""/></svg>
+    </div>
+    <div class=""node-title"">Organizacional</div>
+  </div>
+
+  <div class=""node-btn c-blue"" onclick=""event.stopPropagation(); window.abrirModal_GC('mod-2')"">
+    <div class=""node-circle"">
+      <svg class=""node-icon"" xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5""/><path d=""M9 18h6""/><path d=""M10 22h4""/></svg>
+    </div>
+    <div class=""node-title"">Pedagógica</div>
+  </div>
+
+  <div class=""node-btn c-red"" onclick=""event.stopPropagation(); window.abrirModal_GC('mod-3')"">
+    <div class=""node-circle"">
+      <svg class=""node-icon"" xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect width=""20"" height=""14"" x=""2"" y=""3"" rx=""2""/><line x1=""8"" x2=""16"" y1=""21"" y2=""21""/><line x1=""12"" x2=""12"" y1=""17"" y2=""21""/></svg>
+    </div>
+    <div class=""node-title"">Tecnológica</div>
+  </div>
+
+  <div class=""node-btn c-purple"" onclick=""event.stopPropagation(); window.abrirModal_GC('mod-4')"">
+    <div class=""node-circle"">
+      <svg class=""node-icon"" xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 11 18-5v12L3 14v-3z""/><path d=""M11.6 16.8a3 3 0 1 1-5.8-1.6""/></svg>
+    </div>
+    <div class=""node-title"">Comunicación</div>
+  </div>
+
+</div>
+
+
+<div id=""mod-1"" class=""modal-overlay mod-green"" onclick=""event.stopPropagation(); window.cerrarModal_GC('mod-1')"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""window.cerrarModal_GC('mod-1')"">&times;</div>
+    <div class=""modal-header"">
+      <div class=""modal-icon-wrap""><svg xmlns=""http://www.w3.org/2000/svg"" width=""28"" height=""28"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2""/><circle cx=""9"" cy=""7"" r=""4""/><path d=""M22 21v-2a4 4 0 0 0-3-3.87""/><path d=""M16 3.13a4 4 0 0 1 0 7.75""/></svg></div>
+      <div class=""modal-title"">Organizacional</div>
+    </div>
+    <div class=""modal-body"">
+      <div class=""num-item""><div class=""num-badge"">1.</div><div class=""num-text"">Reconocimiento del Gobierno institucional y áreas de apoyo.</div></div>
+      <div class=""num-item""><div class=""num-badge"">2.</div><div class=""num-text"">Línea de tiempo de aprobaciones de programas virtuales.</div></div>
+      <div class=""num-item""><div class=""num-badge"">3.</div><div class=""num-text"">Matriz de procesos, actividades y responsables.</div></div>
+      <div class=""num-item""><div class=""num-badge"">4.</div><div class=""num-text"">Estructura organizacional DIAD.</div></div>
+      <div class=""num-item""><div class=""num-badge"">5.</div><div class=""num-text"">Planeación estratégica.</div></div>
+      <div class=""num-item""><div class=""num-badge"">6.</div><div class=""num-text"">Proyección del presupuesto de la unidad.</div></div>
+      <div class=""num-item""><div class=""num-badge"">7.</div><div class=""num-text"">Lineamientos para relacionamiento externo - Convenio marco.</div></div>
+      <div class=""num-item""><div class=""num-badge"">8.</div><div class=""num-text"">Unidad de Gestión de proyectos.</div></div>
+    </div>
+  </div>
+</div>
+
+<div id=""mod-2"" class=""modal-overlay mod-blue"" onclick=""event.stopPropagation(); window.cerrarModal_GC('mod-2')"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""window.cerrarModal_GC('mod-2')"">&times;</div>
+    <div class=""modal-header"">
+      <div class=""modal-icon-wrap""><svg xmlns=""http://www.w3.org/2000/svg"" width=""28"" height=""28"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5""/><path d=""M9 18h6""/><path d=""M10 22h4""/></svg></div>
+      <div class=""modal-title"">Pedagógica</div>
+    </div>
+    <div class=""modal-body"">
+      <div class=""num-item""><div class=""num-badge"">1.</div><div class=""num-text"">Reconocer el modelo educativo, reglamento, estatuto profesoral y aseguramiento de calidad.</div></div>
+      <div class=""num-item""><div class=""num-badge"">2.</div><div class=""num-text"">Ajuste o creación de nuevos lineamientos para la modalidad virtual (Ingeniería del aprendizaje y Calidad).</div></div>
+      <div class=""num-item""><div class=""num-badge"">3.</div><div class=""num-text"">Ruta de formación docente para la modalidad virtual.</div></div>
+      <div class=""num-item""><div class=""num-badge"">4.</div><div class=""num-text"">Modelo de tutoría virtual.</div></div>
+      <div class=""num-item""><div class=""num-badge"">5.</div><div class=""num-text"">Evaluación de la experiencia de aprendizaje (UX/UI).</div></div>
+    </div>
+  </div>
+</div>
+
+<div id=""mod-3"" class=""modal-overlay mod-red"" onclick=""event.stopPropagation(); window.cerrarModal_GC('mod-3')"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""window.cerrarModal_GC('mod-3')"">&times;</div>
+    <div class=""modal-header"">
+      <div class=""modal-icon-wrap""><svg xmlns=""http://www.w3.org/2000/svg"" width=""28"" height=""28"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect width=""20"" height=""14"" x=""2"" y=""3"" rx=""2""/><line x1=""8"" x2=""16"" y1=""21"" y2=""21""/><line x1=""12"" x2=""12"" y1=""17"" y2=""21""/></svg></div>
+      <div class=""modal-title"">Tecnológica</div>
+    </div>
+    <div class=""modal-body"">
+      <div class=""num-item""><div class=""num-badge"">1.</div><div class=""num-text"">Diagnóstico del ecosistema tecnológico institucional.</div></div>
+      <div class=""num-item""><div class=""num-badge"">2.</div><div class=""num-text"">Lineamientos Ecosistema tecnológico.</div></div>
+      <div class=""num-item""><div class=""num-badge"">3.</div><div class=""num-text"">Modelo de soporte tecno pedagógico.</div></div>
+      <div class=""num-item""><div class=""num-badge"">4.</div><div class=""num-text"">Orientaciones para uso de herramientas especializadas en la producción de recursos digitales.</div></div>
+      <div class=""num-item""><div class=""num-badge"">5.</div><div class=""num-text"">Modelo Analítica de datos del aprendizaje.</div></div>
+      <div class=""num-item""><div class=""num-badge"">6.</div><div class=""num-text"">Diseño e implementación del micro sitio para la DIAD.</div></div>
+    </div>
+  </div>
+</div>
+
+<div id=""mod-4"" class=""modal-overlay mod-purple"" onclick=""event.stopPropagation(); window.cerrarModal_GC('mod-4')"">
+  <div class=""modal-box"" onclick=""event.stopPropagation();"">
+    <div class=""modal-close"" onclick=""window.cerrarModal_GC('mod-4')"">&times;</div>
+    <div class=""modal-header"">
+      <div class=""modal-icon-wrap""><svg xmlns=""http://www.w3.org/2000/svg"" width=""28"" height=""28"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 11 18-5v12L3 14v-3z""/><path d=""M11.6 16.8a3 3 0 1 1-5.8-1.6""/></svg></div>
+      <div class=""modal-title"">Comunicación</div>
+    </div>
+    <div class=""modal-body"">
+      <div class=""num-item""><div class=""num-badge"">1.</div><div class=""num-text"">Diseño estrategia de comunicación DIAD.</div></div>
+      <div class=""num-item""><div class=""num-badge"">2.</div><div class=""num-text"">Lineamientos Marketing educativo.</div></div>
+      <div class=""num-item""><div class=""num-badge"">3.</div><div class=""num-text"">Mercadeo de programas (Nacional/internacional).</div></div>
+      <div class=""num-item""><div class=""num-badge"">4.</div><div class=""num-text"">Redes y comunidad.</div></div>
+    </div>
+  </div>
+</div>
+
+
+<div class=""nav-btn home"" style=""left: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z""/><polyline points=""9 22 9 12 15 12 15 22""/></svg>
+</div>
+
+<div class=""nav-btn prev"" style=""right: 110px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m12 19-7-7 7-7""/><path d=""M19 12H5""/></svg>
+</div>
+
+<div class=""nav-btn next"" style=""right: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M5 12h14""/><path d=""m12 5 7 7-7 7""/></svg>
+</div>
+
+<script>
+// Lógica de Modales segura para Power BI
+window.abrirModal_GC = function(id) {
+  var modal = document.getElementById(id);
+  if(modal) modal.classList.add('active');
+};
+
+window.cerrarModal_GC = function(id) {
+  var modal = document.getElementById(id);
+  if(modal) {
+    modal.classList.add('closing');
+    setTimeout(function() {
+      modal.classList.remove('active');
+      modal.classList.remove('closing');
+    }, 250);
+  }
+};
+
+// Background de Partículas
+var nc=document.getElementById('n1'),nx=nc.getContext('2d'),nw,nh,nd=[];
+var pcols=['106,27,154','26,101,164','211,47,47','16,157,125'];
+function ni(){nw=nc.width=nc.parentElement.offsetWidth;nh=nc.height=nc.parentElement.offsetHeight;nd=Array.from({length:15},function(){return{x:Math.random()*nw,y:Math.random()*nh,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*2+1,co:pcols[Math.floor(Math.random()*pcols.length)]};});}
+function ndr(){nx.clearRect(0,0,nw,nh);nd.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>nw)n.vx*=-1;if(n.y<0||n.y>nh)n.vy*=-1;});nd.forEach(function(a,i){nd.forEach(function(b,j){if(j<=i)return;var d=Math.hypot(a.x-b.x,a.y-b.y);if(d<180){nx.strokeStyle='rgba('+a.co+','+(0.15*(1-d/180))+')';nx.lineWidth=.6;nx.beginPath();nx.moveTo(a.x,a.y);nx.lineTo(b.x,b.y);nx.stroke();}});});nd.forEach(function(n){nx.beginPath();nx.arc(n.x,n.y,n.r,0,Math.PI*2);nx.fillStyle='rgba('+n.co+',0.5)';nx.fill();});requestAnimationFrame(ndr);}
+ni();ndr();window.addEventListener('resize',ni);
+</script>
+</div>"

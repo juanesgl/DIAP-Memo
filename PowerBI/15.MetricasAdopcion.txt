@@ -1,0 +1,294 @@
+Metricas_Adopcion = 
+"<div style=""width:100%;height:100vh;position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;background:#f4f4f0;pointer-events:auto;animation:bgSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;"" onmousedown=""event.stopPropagation();event.preventDefault();"" onclick=""event.stopPropagation();event.preventDefault();"" oncontextmenu=""event.stopPropagation();event.preventDefault();return false;"">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+
+@keyframes bgSlideIn {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeup { 0%{opacity:0;transform:translateY(30px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes textGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Barra superior resumen (Demografía y Técnica) */
+.summary-strip {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeup 0.8s 0.6s forwards;
+  pointer-events: none;
+  padding: 0 5%;
+}
+.sum-badge {
+  background: #ffffff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid #eee;
+}
+.sum-badge span { color: #1A65A4; font-weight: 800; font-size: 14px; }
+.sum-badge svg { width: 16px; height: 16px; color: #109D7D; }
+
+/* Contenedor del Dashboard Scrollable */
+.metrics-scroll-area {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 15%; /* Deja espacio para los botones */
+  margin: 0 auto;
+  width: 92%;
+  max-width: 1150px;
+  overflow-y: auto;
+  padding-right: 12px;
+  padding-bottom: 20px;
+  opacity: 0;
+  animation: fadeup 0.8s 0.8s forwards;
+}
+
+.metrics-scroll-area::-webkit-scrollbar { width: 6px; }
+.metrics-scroll-area::-webkit-scrollbar-track { background: transparent; }
+.metrics-scroll-area::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
+.metrics-scroll-area::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
+
+/* Grid de 3 Columnas */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Tarjetas de Métricas */
+.metric-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  box-sizing: border-box;
+  border-left: 4px solid transparent;
+}
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+/* Variaciones de Color */
+.m-purple { border-left-color: #6A1B9A; }
+.m-blue { border-left-color: #1A65A4; }
+.m-green { border-left-color: #109D7D; }
+.m-red { border-left-color: #D32F2F; }
+
+.metric-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.metric-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.m-purple .metric-icon { background: rgba(106,27,154,0.1); color: #6A1B9A; }
+.m-blue .metric-icon { background: rgba(26,101,164,0.1); color: #1A65A4; }
+.m-green .metric-icon { background: rgba(16,157,125,0.1); color: #109D7D; }
+.m-red .metric-icon { background: rgba(211,47,47,0.1); color: #D32F2F; }
+.metric-icon svg { width: 20px; height: 20px; }
+
+.metric-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1.2;
+}
+.metric-desc {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Botones de Navegación */
+.nav-btn {
+  position: absolute;
+  bottom: 24px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+  z-index: 10;
+  color: #444;
+  pointer-events: auto;
+}
+.nav-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.nav-btn.home:hover { color: #6A1B9A; }
+.nav-btn.prev:hover { color: #D32F2F; }
+.nav-btn.next:hover { color: #109D7D; }
+</style>
+
+<canvas id=""n1"" style=""position:absolute;inset:0;width:100%;height:100%;pointer-events:none;""></canvas>
+
+<!-- Título Principal -->
+<div style=""position:absolute;top:3%;left:0;right:0;text-align:center;opacity:0;animation:fadeup 0.8s 0.4s forwards;pointer-events:none;"">
+  <div style=""font-size:32px;font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,#6A1B9A,#1A65A4,#109D7D,#D32F2F,#6A1B9A);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:textGradientFlow 12s ease infinite;"">Métricas de Adopción y Consumo</div>
+</div>
+
+<!-- Insignias Resumen Demográfico -->
+<div class=""summary-strip"">
+  <div class=""sum-badge""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2""/><circle cx=""9"" cy=""7"" r=""4""/><path d=""M22 21v-2a4 4 0 0 0-3-3.87""/><path d=""M16 3.13a4 4 0 0 1 0 7.75""/></svg> Usuarios Únicos: <span>176</span></div>
+  <div class=""sum-badge""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M22 10v6M2 10l10-5 10 5-10 5z""/><path d=""M6 12v5c3 3 9 3 12 0v-5""/></svg> Estudiantes: <span>164</span></div>
+  <div class=""sum-badge""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z""/><path d=""M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z""/></svg> Profesores: <span>93</span></div>
+  <div class=""sum-badge""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect width=""18"" height=""18"" x=""3"" y=""3"" rx=""2""/><path d=""M3 9h18""/><path d=""M9 21V9""/></svg> Cursos: <span>18</span></div>
+</div>
+
+<!-- Dashboard Grid (10 Tarjetas) -->
+<div class=""metrics-scroll-area"">
+  <div class=""metrics-grid"">
+
+    <!-- 1. Volumen transaccional -->
+    <div class=""metric-card m-blue"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><ellipse cx=""12"" cy=""5"" rx=""9"" ry=""3""/><path d=""M3 5V19A9 3 0 0 0 21 19V5""/><path d=""M3 12A9 3 0 0 0 21 12""/></svg></div>
+        <div class=""metric-title"">Volumen Transaccional</div>
+      </div>
+      <div class=""metric-desc"">La plataforma documenta un total de <strong>70.477 acciones</strong> en la base de datos, evidenciando un entorno digital altamente activo y estable.</div>
+    </div>
+
+    <!-- 2. Concentración del tráfico -->
+    <div class=""metric-card m-green"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z""/><circle cx=""12"" cy=""12"" r=""3""/></svg></div>
+        <div class=""metric-title"">Concentración del Tráfico</div>
+      </div>
+      <div class=""metric-desc"">El evento más frecuente es <em>'Curso visto'</em> con <strong>18.535 registros</strong>, indicando un comportamiento netamente exploratorio de los materiales y la estructura.</div>
+    </div>
+
+    <!-- 3. Curso dominante -->
+    <div class=""metric-card m-purple"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><circle cx=""12"" cy=""8"" r=""7""/><polyline points=""8.21 13.89 7 23 12 20 17 23 15.79 13.88""/></svg></div>
+        <div class=""metric-title"">Curso Dominante</div>
+      </div>
+      <div class=""metric-desc"">El <em>'Diplomado en Competencias Digitales'</em> concentra la mayor atención, aglomerando <strong>17.968 interacciones</strong> en la muestra.</div>
+    </div>
+
+    <!-- 4. Falla crítica SMTP -->
+    <div class=""metric-card m-red"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z""/><line x1=""12"" y1=""9"" x2=""12"" y2=""13""/><line x1=""12"" y1=""17"" x2=""12.01"" y2=""17""/></svg></div>
+        <div class=""metric-title"">Falla Crítica en Comunicaciones</div>
+      </div>
+      <div class=""metric-desc"">El sistema arroja <strong>1.079 registros</strong> de error: <em>'No se pudo enviar el correo'</em>. Requiere revisión inmediata de la configuración SMTP.</div>
+    </div>
+
+    <!-- 5. Horarios de carga -->
+    <div class=""metric-card m-green"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><circle cx=""12"" cy=""12"" r=""10""/><polyline points=""12 6 12 12 16 14""/></svg></div>
+        <div class=""metric-title"">Horarios de Mayor Carga</div>
+      </div>
+      <div class=""metric-desc"">Las <strong>11:00 a.m.</strong> marcan el pico máximo de actividad y concurrencia. Es el peor momento para programar tareas de mantenimiento o backups.</div>
+    </div>
+
+    <!-- 6. Dificultades de acceso -->
+    <div class=""metric-card m-red"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect width=""18"" height=""11"" x=""3"" y=""11"" rx=""2"" ry=""2""/><path d=""M7 11V7a5 5 0 0 1 10 0v4""/></svg></div>
+        <div class=""metric-title"">Dificultades de Acceso</div>
+      </div>
+      <div class=""metric-desc"">Se contabilizan <strong>333 inicios de sesión fallidos</strong>. Al estar conectado por LDAP, indica problemas de credenciales o sincronización de usuarios.</div>
+    </div>
+
+    <!-- 7. Metodología de evaluación -->
+    <div class=""metric-card m-purple"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><polyline points=""9 11 12 14 22 4""/><path d=""M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11""/></svg></div>
+        <div class=""metric-title"">Metodología de Evaluación</div>
+      </div>
+      <div class=""metric-desc"">Preferencia por pruebas cerradas (<strong>3.340 visualizaciones</strong> de cuestionario) vs. entregas abiertas (solo 53 entregas enviadas y 27 archivos subidos).</div>
+    </div>
+
+    <!-- 8. Conexiones de origen -->
+    <div class=""metric-card m-blue"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><rect width=""20"" height=""16"" x=""2"" y=""4"" rx=""2""/><path d=""m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7""/></svg></div>
+        <div class=""metric-title"">Conexiones de Origen</div>
+      </div>
+      <div class=""metric-desc"">Tráfico principal vía web (37.607 eventos) y presencia sólida de <strong>Web Services (WS) y Consola</strong> con 3.055 registros (ej. App móvil).</div>
+    </div>
+
+    <!-- 9. Parametrización activa -->
+    <div class=""metric-card m-purple"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z""/><circle cx=""12"" cy=""12"" r=""3""/></svg></div>
+        <div class=""metric-title"">Parametrización Activa</div>
+      </div>
+      <div class=""metric-desc"">Existen <strong>1.970 eventos</strong> sobre <em>'Registro de configuración creado/actualizado'</em>. La plataforma está en constante edición y afinamiento.</div>
+    </div>
+
+    <!-- 10. Actividad secundaria -->
+    <div class=""metric-card m-blue"">
+      <div class=""metric-header"">
+        <div class=""metric-icon""><svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8""/><path d=""M3 3v5h5""/><path d=""M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16""/><path d=""M16 16h5v5""/></svg></div>
+        <div class=""metric-title"">Actividad Secundaria</div>
+      </div>
+      <div class=""metric-desc"">El curso <em>'Backup diplomado'</em> muestra <strong>14.321 eventos</strong>, indicando trabajos pesados de restauración o clonación tras bambalinas.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Controles de Navegación -->
+<div class=""nav-btn home"" style=""left: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z""/><polyline points=""9 22 9 12 15 12 15 22""/></svg>
+</div>
+
+<div class=""nav-btn prev"" style=""right: 110px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m12 19-7-7 7-7""/><path d=""M19 12H5""/></svg>
+</div>
+
+<div class=""nav-btn next"" style=""right: 40px;"" onclick=""event.stopPropagation();"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""24"" height=""24"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M5 12h14""/><path d=""m12 5 7 7-7 7""/></svg>
+</div>
+
+<script>
+var nc=document.getElementById('n1'),nx=nc.getContext('2d'),nw,nh,nd=[];
+var pcols=['106,27,154','26,101,164','211,47,47','16,157,125'];
+function ni(){nw=nc.width=nc.parentElement.offsetWidth;nh=nc.height=nc.parentElement.offsetHeight;nd=Array.from({length:15},function(){return{x:Math.random()*nw,y:Math.random()*nh,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*2+1,co:pcols[Math.floor(Math.random()*pcols.length)]};});}
+function ndr(){nx.clearRect(0,0,nw,nh);nd.forEach(function(n){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>nw)n.vx*=-1;if(n.y<0||n.y>nh)n.vy*=-1;});nd.forEach(function(a,i){nd.forEach(function(b,j){if(j<=i)return;var d=Math.hypot(a.x-b.x,a.y-b.y);if(d<180){nx.strokeStyle='rgba('+a.co+','+(0.15*(1-d/180))+')';nx.lineWidth=.6;nx.beginPath();nx.moveTo(a.x,a.y);nx.lineTo(b.x,b.y);nx.stroke();}});});nd.forEach(function(n){nx.beginPath();nx.arc(n.x,n.y,n.r,0,Math.PI*2);nx.fillStyle='rgba('+n.co+',0.5)';nx.fill();});requestAnimationFrame(ndr);}
+ni();ndr();window.addEventListener('resize',ni);
+</script>
+</div>"

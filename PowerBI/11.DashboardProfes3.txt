@@ -1,0 +1,122 @@
+DashboardProfess = 
+"<div style=""width:100%;height:100vh;position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;background:#f4f4f0;pointer-events:none;"">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+
+@keyframes fadeup { 0%{opacity:0;transform:translateY(20px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes textGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Botones de Navegación */
+.nav-btn {
+  position: absolute;
+  top: 4%;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+  z-index: 20;
+  color: #444;
+  pointer-events: auto;
+}
+.nav-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.nav-btn.home:hover { color: #6A1B9A; }
+.nav-btn.prev:hover { color: #D32F2F; }
+.nav-btn.next:hover { color: #109D7D; }
+</style>
+
+<canvas id=""n1"" style=""position:absolute;inset:0;width:100%;height:100%;pointer-events:none;""></canvas>
+<!-- Título del Dashboard -->
+
+<div style=""position:absolute;top:3%;left:2%;opacity:0;animation:fadeup 0.8s 0.4s forwards;pointer-events:none;z-index:10;"">
+
+  <div style=""font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#109D7D;margin-bottom:6px;"">Indicadores y Métricas</div>
+
+  <div style=""font-size:34px;font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,#096B54,#109D7D,#26A69A,#109D7D);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:textGradientFlow 8s ease infinite;"">Dashboard Profesores  </div>
+
+</div> 
+
+
+
+<!-- Controles de Navegación (Arriba a la derecha) -->
+<div class=""nav-btn home"" style=""right: 144px;"" onclick=""event.stopPropagation(); /* Acción ir a Home */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""20"" height=""20"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z""/><polyline points=""9 22 9 12 15 12 15 22""/></svg>
+</div>
+
+<div class=""nav-btn prev"" style=""right: 88px;"" onclick=""event.stopPropagation(); /* Acción ir a Anterior */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""20"" height=""20"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""m12 19-7-7 7-7""/><path d=""M19 12H5""/></svg>
+</div>
+
+<div class=""nav-btn next"" style=""right: 32px;"" onclick=""event.stopPropagation(); /* Acción ir a Siguiente */"">
+  <svg xmlns=""http://www.w3.org/2000/svg"" width=""20"" height=""20"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""><path d=""M5 12h14""/><path d=""m12 5 7 7-7 7""/></svg>
+</div>
+
+<script>
+var nc=document.getElementById('n1'),nx=nc.getContext('2d'),nw,nh,nd=[];
+var pcols=['106,27,154','26,101,164','211,47,47','16,157,125'];
+
+function ni(){
+  nw=nc.width=nc.parentElement.offsetWidth;
+  nh=nc.height=nc.parentElement.offsetHeight;
+  nd=Array.from({length:20},function(){
+    return {
+      x:Math.random()*nw,
+      y:Math.random()*nh,
+      vx:(Math.random()-.5)*.25,
+      vy:(Math.random()-.5)*.25,
+      r:Math.random()*2+1,
+      co:pcols[Math.floor(Math.random()*pcols.length)]
+    };
+  });
+}
+
+function ndr(){
+  nx.clearRect(0,0,nw,nh);
+  nd.forEach(function(n){
+    n.x+=n.vx; n.y+=n.vy;
+    if(n.x<0||n.x>nw)n.vx*=-1;
+    if(n.y<0||n.y>nh)n.vy*=-1;
+  });
+  
+  nd.forEach(function(a,i){
+    nd.forEach(function(b,j){
+      if(j<=i)return;
+      var d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<180){
+        nx.strokeStyle='rgba('+a.co+','+(0.15*(1-d/180))+')';
+        nx.lineWidth=.6;
+        nx.beginPath();
+        nx.moveTo(a.x,a.y);
+        nx.lineTo(b.x,b.y);
+        nx.stroke();
+      }
+    });
+  });
+
+  nd.forEach(function(n){
+    nx.beginPath();
+    nx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    nx.fillStyle='rgba('+n.co+',0.5)';
+    nx.fill();
+  });
+
+  requestAnimationFrame(ndr);
+}
+
+ni();
+ndr();
+window.addEventListener('resize',ni);
+</script>
+</div>"
