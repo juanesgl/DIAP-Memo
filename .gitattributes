@@ -1,0 +1,2 @@
+# Linguist trata SQL como "data" y no lo muestra en la barra de lenguajes de GitHub
+*.sql linguist-detectable=true
